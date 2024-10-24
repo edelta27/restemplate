@@ -1,0 +1,8 @@
+spring:
+  application:
+  name: restemplate
+shawnmendes:
+  service:
+  url: https://itunes.apple.com
+  url1: https://itunes.apple1.com
+  url2: https://itunes.apple2.com
