@@ -20,7 +20,7 @@ public class ShawnMendesProxy {
     RestTemplate restTemplate;
     @Value("${shawnmendes.service.url}")
     String url;
-    @Value("#{1+2}")
+    @Value("#{1+2+3}")
     int suma;
 
     public ShawnMendesResponse makeShawnMendesRequest(String term, Integer limit) throws JsonProcessingException {
