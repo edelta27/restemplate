@@ -10,6 +10,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -20,23 +22,32 @@ public class ShawnMendesProxy {
     RestTemplate restTemplate;
     @Value("${shawnmendes.service.url}")
     String url;
-    @Value("#{1+2+3}")
-    int suma;
 
-    public ShawnMendesResponse makeShawnMendesRequest(String term, Integer limit) throws JsonProcessingException {
+    public String makeShawnMendesRequest(String term, Integer limit) throws JsonProcessingException {
 
         String uri = url + "/search?term=" + term + "&limit=" + limit;
-        ResponseEntity<String> response = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                null,
-                String.class
-        );
-        String json = response.getBody();
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, ShawnMendesResponse.class);
+        return makeRequest(uri);
 
     }
+
+    private String makeRequest(String uri) {
+        try{
+            ResponseEntity<String> response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    null,
+                    String.class
+            );
+            return response.getBody();
+        }catch (RestClientResponseException exception){
+            System.out.println(exception.getStatusText() + " " + exception.getStatusCode().value() );
+        }catch (RestClientException exception){
+            System.out.println(exception.getMessage());
+        }
+        return null;
+    }
+
+
 
 
 }

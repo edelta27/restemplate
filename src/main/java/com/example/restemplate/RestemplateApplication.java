@@ -18,11 +18,13 @@ public class RestemplateApplication {
 
         SpringApplication.run(RestemplateApplication.class, args);
     }
-
     @EventListener(ApplicationStartedEvent.class)
     public void makeRequestToShawnMendesEndpoint() throws JsonProcessingException {
-        ShawnMendesResponse response = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 1);
-        System.out.println(response);
+        String json = shawnMendesClient.makeShawnMendesRequest("shawnmendes", 1);
+        if (json != null) {
+            ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
+            System.out.println(shawnMendesResponse);
+        }
     }
     private ShawnMendesResponse mapJsonToShawnMendesResponse(String json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
