@@ -13,27 +13,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class ShawnMendesProxy {
+public class ItunesProxy {
 
-    // GET https://itunes.apple.com/search?term=shawnmendes&limit=1
+
     @Autowired
     RestTemplate restTemplate;
-    @Value("${shawnmendes.service.url}")
+    @Value("${itunes.service.url}")
     String url;
+    @Value("${itunes.service.port}")
+    int port;
 
-    public String makeShawnMendesRequest(String term, Integer limit) throws JsonProcessingException {
+    public String makeRequest(String term, Integer limit) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .newInstance()
+                .scheme("https")
+                .host(url)
+                .port(port)
+                .path("/search")
+                .queryParam("term", "shawnMendes")
+                .queryParam("limit", 1);
 
-        String uri = url + "/search?term=" + term + "&limit=" + limit;
-        return makeRequest(uri);
-
-    }
-
-    private String makeRequest(String uri) {
         try{
             ResponseEntity<String> response = restTemplate.exchange(
-                    uri,
+                    builder.build().toUri(),
                     HttpMethod.GET,
                     null,
                     String.class
