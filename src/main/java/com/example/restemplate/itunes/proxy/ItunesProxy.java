@@ -1,4 +1,4 @@
-package com.example.restemplate;
+package com.example.restemplate.itunes.proxy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

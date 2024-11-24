@@ -1,6 +1,5 @@
-package com.example.restemplate;
+package com.example.restemplate.sampleshawnmendes.proxy;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
